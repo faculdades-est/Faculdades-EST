@@ -1,94 +1,89 @@
-
 <!DOCTYPE html>
 <html lang='pt-BR'>
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>Jornada Acad&ecirc;mica | Faculdades EST</title>
-<style>
-body{margin:0;font-family:sans-serif;background:#f3f5f8;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}
-.container{width:100%;max-width:850px;background:#fff;border-radius:15px;padding:35px;box-shadow:0 8px 20px rgba(0,0,0,.12);text-align:center;}
-h1{color:#004a87;margin-bottom:5px;}
-h2{margin-top:0;color:#666;font-size:18px;font-weight:normal;}
-.meta{margin-top:15px;color:#777;font-size:15px;}
-#timer{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:35px 0;}
-.card{background:#004a87;color:white;min-width:70px;padding:15px 5px;border-radius:10px;}
-.numero{font-size:28px;font-weight:bold;}
-.texto{font-size:11px;text-transform:uppercase;}
-.progress{width:100%;height:25px;background:#eee;border-radius:20px;overflow:hidden;margin-top:20px;border:1px solid #ddd;}
-.progress-bar{height:100%;background:linear-gradient(90deg, #2e8b57, #3cb371);transition:1s;width:0%;}
-#percentual{margin-top:10px;font-weight:bold;color:#004a87;font-size:18px;}
-.status-msg{margin-bottom:10px;font-weight:bold;color:#d9534f;}
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div class='container'&gt;
-&lt;h1&gt;&#127891; Rumo ao Doutorado&lt;/h1&gt;
-&lt;h2&gt;Faculdades EST&lt;br&gt;Mestrado Profissional&lt;/h2&gt;
-&lt;div class='meta'&gt;In&iacute;cio: 13/07/2026 | Meta: &lt;strong&gt;13/07/2028&lt;/strong&gt;&lt;/div&gt;
-&lt;div id='status' class='status-msg'&gt;&lt;/div&gt;
-&lt;div id='timer'&gt;&lt;/div&gt;
-&lt;div class='progress'&gt;&lt;div class='progress-bar' id='barra'&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;div id='percentual'&gt;0%&lt;/div&gt;
-&lt;/div&gt;
-&lt;script&gt;
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Jornada Acadêmica | Faculdades EST</title>
+    <style>
+        body { margin:0; font-family:sans-serif; background:#f3f5f8; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
+        .container { width:100%; max-width:850px; background:#fff; border-radius:15px; padding:35px; box-shadow:0 8px 20px rgba(0,0,0,.12); text-align:center; }
+        h1 { color:#004a87; margin-bottom:5px; }
+        h2 { margin-top:0; color:#666; font-size:18px; font-weight:normal; }
+        .meta { margin-top:15px; color:#777; font-size:15px; }
+        #timer { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:35px 0; }
+        .card { background:#004a87; color:white; min-width:80px; padding:15px 5px; border-radius:10px; }
+        .numero { font-size:28px; font-weight:bold; }
+        .texto { font-size:11px; text-transform:uppercase; }
+        .progress { width:100%; height:25px; background:#eee; border-radius:20px; overflow:hidden; margin-top:20px; border:1px solid #ddd; }
+        .progress-bar { height:100%; background:linear-gradient(90deg, #2e8b57, #3cb371); transition:1s; width:0%; }
+        #percentual { margin-top:10px; font-weight:bold; color:#004a87; font-size:18px; }
+        .status-msg { margin-bottom:10px; font-weight:bold; color:#d9534f; }
+    </style>
+</head>
+<body>
+<div class='container'>
+    <h1>🎓 Rumo ao Doutorado</h1>
+    <h2>Faculdades EST<br>Mestrado Profissional</h2>
+    <div class='meta'>Início: 13/07/2026 | Meta: <strong>13/07/2028</strong></div>
+    <div id='status' class='status-msg'></div>
+    <div id='timer'></div>
+    <div class='progress'><div class='progress-bar' id='barra'></div></div>
+    <div id='percentual'>0%</div>
+</div>
+
+<script>
 const dataInicio = new Date('2026-07-13T00:00:00');
 const dataFim = new Date('2028-07-13T00:00:00');
 const progressoBase = 75;
 
-function atualizar(){
+function atualizar() {
     const agora = new Date();
-
     let diff = dataFim - agora;
     let msgStatus = "";
 
-    if (agora &lt; dataInicio) {
-        msgStatus = "A jornada come&ccedil;a em:";
+    if (agora < dataInicio) {
+        msgStatus = "A jornada começa em:";
         diff = dataInicio - agora;
-    } else if (diff &lt;= 0) {
-        document.querySelector('.container').innerHTML = "&lt;h1&gt;&#127881; Jornada Conclu&iacute;da!&lt;/h1&gt;";
+    } else if (diff <= 0) {
+        document.querySelector('.container').innerHTML = "<h1>🎉 Jornada Concluída!</h1>";
         return;
     } else {
-        msgStatus = "Tempo restante para o Doutorado:";
+        msgStatus = "Tempo restante para a meta:";
     }
 
     document.getElementById('status').innerText = msgStatus;
 
-    const segundosTotal = Math.floor(diff / 1000);
-    const anos = Math.floor(segundosTotal / (3600 * 24 * 365));
-    const meses = Math.floor((segundosTotal % (3600 * 24 * 365)) / (3600 * 24 * 30.44));
-    const dias = Math.floor((segundosTotal % (3600 * 24 * 30.44)) / (3600 * 24));
-    const horas = Math.floor((segundosTotal % (3600 * 24)) / 3600);
-    const mins = Math.floor((segundosTotal % 3600) / 60);
-    const segs = Math.floor(segundosTotal % 60);
+    const segTotal = Math.floor(diff / 1000);
+    const anos = Math.floor(segTotal / (3600 * 24 * 365));
+    const meses = Math.floor((segTotal % (3600 * 24 * 365)) / (3600 * 24 * 30.44));
+    const dias = Math.floor((segTotal % (3600 * 24 * 30.44)) / (3600 * 24));
+    const horas = Math.floor((segTotal % (3600 * 24)) / 3600);
+    const mins = Math.floor((segTotal % 3600) / 60);
+    const segs = Math.floor(segTotal % 60);
 
     document.getElementById('timer').innerHTML = `
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${anos}&lt;/div&gt;&lt;div class='texto'&gt;Anos&lt;/div&gt;&lt;/div&gt;
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${meses}&lt;/div&gt;&lt;div class='texto'&gt;Meses&lt;/div&gt;&lt;/div&gt;
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${dias}&lt;/div&gt;&lt;div class='texto'&gt;Dias&lt;/div&gt;&lt;/div&gt;
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${horas}&lt;/div&gt;&lt;div class='texto'&gt;Horas&lt;/div&gt;&lt;/div&gt;
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${mins}&lt;/div&gt;&lt;div class='texto'&gt;Min&lt;/div&gt;&lt;/div&gt;
-        &lt;div class='card'&gt;&lt;div class='numero'&gt;${segs}&lt;/div&gt;&lt;div class='texto'&gt;Seg&lt;/div&gt;&lt;/div&gt;
+        <div class='card'><div class='numero'>${anos}</div><div class='texto'>Anos</div></div>
+        <div class='card'><div class='numero'>${meses}</div><div class='texto'>Meses</div></div>
+        <div class='card'><div class='numero'>${dias}</div><div class='texto'>Dias</div></div>
+        <div class='card'><div class='numero'>${horas}</div><div class='texto'>Horas</div></div>
+        <div class='card'><div class='numero'>${mins}</div><div class='texto'>Min</div></div>
+        <div class='card'><div class='numero'>${segs}</div><div class='texto'>Seg</div></div>
     `;
 
-    let percAtual = 0;
-    if (agora &gt;= dataInicio) {
-        const totalJornada = dataFim - dataInicio;
+    let percAtual = progressoBase;
+    if (agora >= dataInicio) {
+        const total = dataFim - dataInicio;
         const decorrido = agora - dataInicio;
-        const ganhoTemporal = (decorrido / totalJornada) * (100 - progressoBase);
-        percAtual = progressoBase + ganhoTemporal;
-    } else {
-        percAtual = progressoBase;
+        percAtual = progressoBase + ((decorrido / total) * (100 - progressoBase));
     }
 
     percAtual = Math.min(100, Math.max(0, percAtual));
     document.getElementById('barra').style.width = percAtual.toFixed(4) + '%';
-    document.getElementById('percentual').innerText = percAtual.toFixed(4) + '% conclu&iacute;do';
+    document.getElementById('percentual').innerText = percAtual.toFixed(4) + '% concluído';
 }
 
 setInterval(atualizar, 1000);
 atualizar();
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-    
+</script>
+</body>
+</html>
